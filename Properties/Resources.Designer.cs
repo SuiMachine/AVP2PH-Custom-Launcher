@@ -63,19 +63,9 @@ namespace AVP_CustomLauncher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap avp_logo {
+        internal static System.Drawing.Bitmap yes1 {
             get {
-                object obj = ResourceManager.GetObject("avp_logo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap yes {
-            get {
-                object obj = ResourceManager.GetObject("yes", resourceCulture);
+                object obj = ResourceManager.GetObject("yes1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

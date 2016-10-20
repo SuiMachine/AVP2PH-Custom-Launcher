@@ -105,11 +105,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\avp_logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="AutoRun.ico" />
-    <None Include="Resources\yes.bmp" />
+    <None Include="Resources\yes1.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

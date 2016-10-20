@@ -34,14 +34,14 @@ namespace AVP_CustomLauncher
         int[] offsetFovX = new int[] { 0x4, 0xC4 };
         int[] offsetFovY = new int[] { 0x4, 0xC8 };
 
-        int bgScalingAddress = 0x001E03A4;
+        int bgScalingAddress = 0x001F70C4;
         int[] bgScalingOffsets = new int[] { 0x2BC, 0x1c4 };
 
         public void DoWork()
         {
             fovY = HorizontalFOVToVerticalRadians(desiredfov);
-            fovX = VerticalRadiansToHorizontalRadiansWithResolution(fovY);
-            //bgCorrectedValue = correntMenuBGWithAspect(1.308997035f);
+            fovX = VerticalRadiansToHorizontalFor4By3Monitor(fovY);
+            bgCorrectedValue = correntMenuBGWithAspect(1.308997035f);
 
 
             Trace.WriteLine("Display FOV calculated to: " + fovX + " horizontal, " + fovY + " vertical");
@@ -80,7 +80,7 @@ namespace AVP_CustomLauncher
                     {
                         ReadFovX = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + fovAddress, offsetFovX);
                         ReadFovY = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + fovAddress, offsetFovY);
-                        //readBgValue = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsets);
+                        readBgValue = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsets);
 
 
 
@@ -88,11 +88,9 @@ namespace AVP_CustomLauncher
                             Trainer.WritePointerFloat(myProcess, cshellBaseAdress + fovAddress, offsetFovX, fovX);
                         if (ReadFovY != fovY && ReadFovY != 0x0000000)
                             Trainer.WritePointerFloat(myProcess, cshellBaseAdress + fovAddress, offsetFovY, fovY);
-                        /*
-                        if (readBgValue != bgCorrectedValue && readBgValue != 0x0000000)
-                            Trainer.WritePointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsets, bgCorrectedValue);*/
 
-                        /*
+                        if (readBgValue != bgCorrectedValue && readBgValue != 0x0000000)
+                            Trainer.WritePointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsets, bgCorrectedValue);
 
                         if (!dllInjected && LithTechBaseAdress != 0x0 && cshellBaseAdress != 0x0)
                         {
@@ -131,7 +129,7 @@ namespace AVP_CustomLauncher
                                 Trainer.WriteInteger(myProcess, hookedDllAddress + 0x400C, ResolutionY);
                             }
                             #endif
-                        }*/
+                        }
                     }
                     System.Threading.Thread.Sleep(threadDelay);
                 }

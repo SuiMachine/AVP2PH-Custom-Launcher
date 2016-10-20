@@ -57,14 +57,14 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(388, 390);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(356, 350);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // B_Exit
             // 
             this.B_Exit.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.B_Exit.AutoSize = true;
-            this.B_Exit.Location = new System.Drawing.Point(127, 349);
+            this.B_Exit.Location = new System.Drawing.Point(109, 309);
             this.B_Exit.Name = "B_Exit";
             this.B_Exit.Size = new System.Drawing.Size(137, 37);
             this.B_Exit.TabIndex = 4;
@@ -76,7 +76,7 @@
             // 
             this.B_DisplaySettings.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.B_DisplaySettings.AutoSize = true;
-            this.B_DisplaySettings.Location = new System.Drawing.Point(127, 305);
+            this.B_DisplaySettings.Location = new System.Drawing.Point(109, 265);
             this.B_DisplaySettings.Name = "B_DisplaySettings";
             this.B_DisplaySettings.Size = new System.Drawing.Size(137, 37);
             this.B_DisplaySettings.TabIndex = 2;
@@ -88,7 +88,7 @@
             // 
             this.B_StartGame.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.B_StartGame.AutoSize = true;
-            this.B_StartGame.Location = new System.Drawing.Point(127, 261);
+            this.B_StartGame.Location = new System.Drawing.Point(109, 221);
             this.B_StartGame.Name = "B_StartGame";
             this.B_StartGame.Size = new System.Drawing.Size(137, 37);
             this.B_StartGame.TabIndex = 1;
@@ -98,11 +98,11 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pictureBox1.Image = global::AVP_CustomLauncher.Properties.Resources.yes;
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pictureBox1.Image = global::AVP_CustomLauncher.Properties.Resources.yes1;
             this.pictureBox1.Location = new System.Drawing.Point(4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(383, 250);
+            this.pictureBox1.Size = new System.Drawing.Size(348, 210);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -110,7 +110,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(388, 391);
+            this.ClientSize = new System.Drawing.Size(356, 351);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
