@@ -1,6 +1,6 @@
-Aliens vs. Predator 2 - Custom Launcher
+Aliens vs. Predator 2: Primal Hunt - Custom Launcher
 ============
-A custom launcher for Aliens vs. Predator 2, written in C#.
+A custom launcher for Aliens vs. Predator 2: Primal Hunt, written in C# (with elements of C++ and ASM)
 
 Features
 --------
