@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AVP_CustomLauncher</RootNamespace>
-    <AssemblyName>AVP_CustomLauncher</AssemblyName>
+    <AssemblyName>AVP2PH_CustomLauncher</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
