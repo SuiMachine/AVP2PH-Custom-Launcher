@@ -140,7 +140,7 @@ DWORD WINAPI HookThread(LPVOID param)
 		//Overriding:
 		//mov eax,[edx]       - 2 OP bytes
 		//mov ecx,[edx + 04]  - 3 OP bytes
-		int hookLenght = 0x5;
+		int hookLenght = 5;
 		DWORD hookAddress = cshellAddress+0xEF79; 		//Solve address = "cshell.dll"+EF79
 		jmpResAddress = hookAddress + hookLenght;
 		Hook((void*)hookAddress, resHack, hookLenght);

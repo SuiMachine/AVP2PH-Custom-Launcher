@@ -24,6 +24,7 @@ namespace AVP_CustomLauncher
 
         public mainform()
         {
+            LogHandler.WriteLine("LogFile created.");
             if (File.Exists("autoexecextended.cfg"))
             {
                 setPositionFromConfig();
@@ -201,7 +202,7 @@ namespace AVP_CustomLauncher
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred!: " + ex.Message);
+                LogHandler.WriteLine("Exception in mainform (gameprocess):" + ex.ToString());
                 return;
             }
         }
@@ -236,6 +237,7 @@ namespace AVP_CustomLauncher
 
                 File.WriteAllText("autoexecextended.cfg", output);
             }
+            LogHandler.Close();
         }
 
         private void mainform_LocationChanged(object sender, EventArgs e)

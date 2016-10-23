@@ -33,6 +33,7 @@ namespace AVP_CustomLauncher
         public GameSettings(mainform parent)
         {
             InitializeComponent();
+            
 
             if (!File.Exists(@customConfig))
             {
