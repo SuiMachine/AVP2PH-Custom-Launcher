@@ -40,6 +40,8 @@ namespace AVP_CustomLauncher
             }
             else
                 readcustomconfig();
+
+            readfile();
         }
 
         
@@ -55,7 +57,6 @@ namespace AVP_CustomLauncher
 
         private void GraphicsSettings_Load(object sender, EventArgs e)
         {
-            readfile();
         }
         
         public void readcustomconfig()

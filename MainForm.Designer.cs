@@ -32,8 +32,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.B_Exit = new System.Windows.Forms.Button();
             this.B_DisplaySettings = new System.Windows.Forms.Button();
-            this.B_StartGame = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.B_StartGame = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -84,6 +84,16 @@
             this.B_DisplaySettings.UseVisualStyleBackColor = true;
             this.B_DisplaySettings.Click += new System.EventHandler(this.B_DisplaySettings_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pictureBox1.Image = global::AVP_CustomLauncher.Properties.Resources.yes1;
+            this.pictureBox1.Location = new System.Drawing.Point(4, 4);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(348, 210);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // B_StartGame
             // 
             this.B_StartGame.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -95,16 +105,6 @@
             this.B_StartGame.Text = "Start the Game";
             this.B_StartGame.UseVisualStyleBackColor = true;
             this.B_StartGame.Click += new System.EventHandler(this.B_StartGame_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pictureBox1.Image = global::AVP_CustomLauncher.Properties.Resources.yes1;
-            this.pictureBox1.Location = new System.Drawing.Point(4, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(348, 210);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // mainform
             // 
@@ -119,7 +119,9 @@
             this.Name = "mainform";
             this.ShowIcon = false;
             this.Text = "Aliens vs. Predator 2: Primal Hunt  - Custom Launcher";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainform_FormClosing);
             this.Load += new System.EventHandler(this.mainform_Load);
+            this.LocationChanged += new System.EventHandler(this.mainform_LocationChanged);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
