@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AVP_CustomLauncher
 {
@@ -16,6 +17,7 @@ namespace AVP_CustomLauncher
         int d3dren = 0x0;
         int hookedDllAddress = 0x0;
         Process[] myProcess;
+        string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         static int threadDelay = 500;
         private volatile bool _shouldStop = false;
@@ -45,7 +47,7 @@ namespace AVP_CustomLauncher
             fovX = VerticalRadiansToHorizontalFor4By3Monitor(fovY);
             bgCorrectedValue = correntMenuBGWithAspect(1.308997035f);
 
-
+            LogHandler.WriteLine("Launcher directory is: " +path);
             LogHandler.WriteLine("Display FOV calculated to: " + fovX + " horizontal, " + fovY + " vertical");
             System.Threading.Thread.Sleep(5000);
 
@@ -132,7 +134,7 @@ namespace AVP_CustomLauncher
 
 
 
-                            DllInjectionResult result = DllInjector.GetInstance.Inject(myProcess, "widescreenfix.dll");
+                            DllInjectionResult result = DllInjector.GetInstance.Inject(myProcess, Path.Combine(path, "widescreenfix.dll"));
                             LogHandler.WriteLine("DLL Injection: " + result);
                             if(result == DllInjectionResult.Success)
                             {

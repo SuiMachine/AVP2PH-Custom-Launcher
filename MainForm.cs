@@ -39,14 +39,14 @@ namespace AVP_CustomLauncher
 
             for (int i = 0; i < files.Length; i++)
             {
-                if (!File.Exists(@files[i]))
+                if (!File.Exists(files[i]))
                 {
                     MessageBox.Show("No " + files[i] + " found. Please place the custom launcher in the directory with the game!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
             }
 
-            if (!File.Exists(@"widescreenfix.dll"))
+            if (!File.Exists("widescreenfix.dll"))
             {
                 MessageBox.Show("Widescreenfix.dll has not been found. This file is required for Widescreen support.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -81,7 +81,7 @@ namespace AVP_CustomLauncher
 
             string output = String.Format("-windowtitle \"Aliens versus Predator 2: Primal Hunt\" -rez \"{0}AVP2.rez\" -rez \"{0}sounds.rez\" -rez \"{0}Alien.rez\" -rez \"{0}Marine.rez\" -rez \"{0}Predator.rez\" -rez \"{0}Multi.rez\" -rez multi.rez -rez \"AVP2dll.rez\" -rez \"AVP2l.rez\" -rez dialogue.rez -rez avp2p.rez -rez avp2p1.rez -rez avp2x.rez -rez custom", basePath + "\\");
 
-            StreamWriter SW = new StreamWriter(@"avp2cmds.txt");
+            StreamWriter SW = new StreamWriter("avp2cmds.txt");
             SW.WriteLine(output);
             SW.Close();
         }
@@ -120,13 +120,13 @@ namespace AVP_CustomLauncher
         {
             CheckForRequiredGameFiles();
 
-            if (!File.Exists(@"autoexec.cfg"))
+            if (!File.Exists("autoexec.cfg"))
             {
                 _ConfigChoice = new ConfigChoice();
                 _ConfigChoice.ShowDialog();
             }
 
-            if (!File.Exists(@"avp2cmds.txt"))
+            if (!File.Exists("avp2cmds.txt"))
             {
                 MessageBox.Show("No avp2cmds.txt found. The launcher will try to create it based on files in your current directory.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 CreateGenericAVP2Cmds();
@@ -137,9 +137,10 @@ namespace AVP_CustomLauncher
 
         private void B_StartGame_Click(object sender, EventArgs e)
         {
-            StreamReader SR = new StreamReader(@"avp2cmds.txt");
+            StreamReader SR = new StreamReader("avp2cmds.txt");
             string cmdlineparamters = "";
             cmdlineparamters = SR.ReadToEnd();
+            cmdlineparamters = stripResolutionParameters(cmdlineparamters);
 
             cmdlineparamters += " ++RenderDll d3d.ren ++CardDesc display";
 
@@ -205,6 +206,45 @@ namespace AVP_CustomLauncher
                 LogHandler.WriteLine("Exception in mainform (gameprocess):" + ex.ToString());
                 return;
             }
+        }
+
+        private string stripResolutionParameters(string cmdlineparamters)
+        {
+            string[] words = cmdlineparamters.Split(' ');
+            for(int i=0; i<words.Length-1; i++)
+            {
+                if (words[i].ToLower() == "++gamescreenwidth" || words[i].ToLower() == "++screenwidth")
+                {
+                    uint num;
+                    if(uint.TryParse(words[i+1], out num))
+                    {
+                        words[i + 1] = _GraphicsSettings.ResolutionX.ToString();
+                        i++;
+                    }
+                }
+                else if (words[i].ToLower() == "++gamescreenheight" || words[i].ToLower() == "++screenheight")
+                {
+                    uint num;
+                    if (uint.TryParse(words[i + 1], out num))
+                    {
+                        words[i + 1] = _GraphicsSettings.ResolutionY.ToString();
+                        i++;
+                    }
+                }
+                else if (words[i].ToLower() == "++gamebitdepth" || words[i].ToLower() == "++bitdepth")
+                {
+                    uint num;
+                    if (uint.TryParse(words[i + 1], out num))
+                    {
+                        if (_GraphicsSettings.GameBitDepth)
+                            words[i + 1] = "32";
+                        else
+                            words[i + 1] = "16";
+                        i++;
+                    }
+                }
+            }
+            return string.Join(" ", words);
         }
 
         private void mainform_FormClosing(object sender, FormClosingEventArgs e)
