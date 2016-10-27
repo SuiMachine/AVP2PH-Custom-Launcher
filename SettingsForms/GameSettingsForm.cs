@@ -29,6 +29,9 @@ namespace AVP_CustomLauncher
         public bool disablejoystick = true;
         public bool disablehardwarecursor = false;
 
+        public bool notificationWindowed = true;
+        public bool notificationToBig = true;
+
         public bool aspectratiohack = false;
         public float fov = 90.0f;
         string text = "";
@@ -54,10 +57,173 @@ namespace AVP_CustomLauncher
             readfile();
         }
 
+        #region eventHandlers
         private void GraphicsSettings_Load(object sender, EventArgs e)
         {
         }
-        
+
+        private void T_ResolutionX_TextChanged(object sender, EventArgs e)
+        {
+            var res = 1280;
+            if (int.TryParse(T_ResolutionX.Text, out res))
+            {
+                ResolutionX = res;
+
+                if (ResolutionX > 2048 && notificationToBig == false)
+                {
+                    notificationToBig = true;
+                    if (!File.Exists("D3DIM700.DLL"))
+                    {
+                        DialogResult result = MessageBox.Show("For resolutions wider than 2048 you'll need jackfuste's D3DIM700.dll wrapper. Running the game without it, will either crash the game or cause it to start in 640x480. Do you wish to download it?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start("http://www.wsgf.org/forums/viewtopic.php?p=155982#p155982");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void T_ResolutionY_TextChanged(object sender, EventArgs e)
+        {
+            var res = 720;
+            if (int.TryParse(T_ResolutionY.Text, out res))
+            {
+                ResolutionY = res;
+
+                if (ResolutionY > 2048 && notificationToBig == false)
+                {
+                    notificationToBig = true;
+                    if (!File.Exists("D3DIM700.DLL"))
+                    {
+                        DialogResult result = MessageBox.Show("For resolutions wider than 2048 you'll need jackfuste's D3DIM700.dll wrapper. Running the game without it, will either crash the game or cause it to start in 640x480. Do you wish to download it?", "Notification", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start("http://www.wsgf.org/forums/viewtopic.php?p=155982#p155982");
+                        }
+                    }
+                }
+            }
+        }
+
+        private void C_Windowed_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_Windowed.Checked)
+            {
+                windowed = true;
+                if (!notificationWindowed)
+                {
+                    notificationWindowed = true;
+                    MessageBox.Show("Warning: The game uses V-sync to limit its framerate and has some unintended behaviours when the framerate is uncapped.\n\nSince V-sync doesn't work in windowed mode, make sure to use either GPU control panel setting or external application (like Dxtory) to limit your framerate.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+                windowed = false;
+        }
+
+        private void C_EnableAspectRatioMemoryWrite_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_EnableAspectRatioMemoryWrite.Checked)
+            {
+                aspectratiohack = true;
+                TB_FOV.Enabled = true;
+            }
+            else
+            {
+                aspectratiohack = false;
+                TB_FOV.Enabled = false;
+            }
+
+        }
+
+        private void C_32color_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_32color.Checked)
+                GameBitDepth = true;
+            else
+                GameBitDepth = false;
+        }
+
+        private void TB_FOV_TextChanged(object sender, EventArgs e)
+        {
+            var res = 90.0f;
+            if (float.TryParse(TB_FOV.Text, out res))
+            {
+                fov = res;
+            }
+        }
+
+        private void B_ManualEdit_TextChanged(object sender, EventArgs e)
+        {
+            text = B_ManualEdit.Text;
+        }
+
+        private void B_SaveAndClose_Click(object sender, EventArgs e)
+        {
+            savecustomconfig();
+            savefile();
+            Close();
+        }
+
+        private void B_Cancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void C_DisableSound_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_DisableSound.Checked)
+                disablesound = true;
+            else
+                disablesound = false;
+        }
+
+        private void C_DisableMusic_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_DisableMusic.Checked)
+                disablemusic = true;
+            else
+                disablemusic = false;
+        }
+
+        private void C_DisableLogos_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_DisableLogos.Checked)
+                disablelogos = true;
+            else
+                disablelogos = false;
+        }
+
+        private void C_DisableTripleBuffering_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_DisableTripleBuffering.Checked)
+                disabletripplebuffering = true;
+            else
+                disabletripplebuffering = false;
+        }
+
+        private void C_DisableJoystick_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_DisableJoystick.Checked)
+                disablejoystick = true;
+            else
+                disablejoystick = false;
+        }
+
+        private void C_DisableHardwareCursor_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C_DisableHardwareCursor.Checked)
+                disablehardwarecursor = true;
+            else
+                disablehardwarecursor = false;
+        }
+
+        private void T_CommandLine_TextChanged(object sender, EventArgs e)
+        {
+        }
+        #endregion
+
+        #region readFunctions
         public void readcustomconfig()
         {
             StreamReader SR = new StreamReader(customConfig);
@@ -245,75 +411,17 @@ namespace AVP_CustomLauncher
             B_ManualEdit.Text = text;
             SR.Close();
             SR.Dispose();
+            notificationToBig = false;
+            notificationWindowed = false;
         }
+        #endregion
 
-        private void T_ResolutionX_TextChanged(object sender, EventArgs e)
-        {
-            var res = 1280;
-            if(int.TryParse(T_ResolutionX.Text, out res))
-            {
-                ResolutionX = res;
-            }
-        }
-
-        private void T_ResolutionY_TextChanged(object sender, EventArgs e)
-        {
-            var res = 720;
-            if (int.TryParse(T_ResolutionY.Text, out res))
-            {
-                ResolutionY = res;
-            }
-        }
-
-        private void C_Windowed_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_Windowed.Checked)
-            {
-                windowed = true;
-                //MessageBox.Show("Warning: The game uses V-sync to limit its framerate and has some unintended behaviours when the framerate is uncapped.\n\nSince V-sync doesn't work in windowed mode, make sure to use either GPU control panel setting or external application (like Dxtory) to limit your framerate.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            else
-                windowed = false;
-        }
-
-        private void C_EnableAspectRatioMemoryWrite_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_EnableAspectRatioMemoryWrite.Checked)
-            {
-                aspectratiohack = true;
-                TB_FOV.Enabled = true;
-            }
-            else
-            {
-                aspectratiohack = false;
-                TB_FOV.Enabled = false;
-            }
-
-        }
-
-        private void C_32color_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_32color.Checked)
-                GameBitDepth = true;
-            else
-                GameBitDepth = false;
-        }
-
-        private void TB_FOV_TextChanged(object sender, EventArgs e)
-        {
-            var res = 90.0f;
-            if(float.TryParse(TB_FOV.Text, out res))
-            {
-                fov = res;
-            }
-        }
-
+        #region saveFunctions
         private void savecustomconfig()
         {
             string output = "";
             output += "Windowed:" + windowed.ToString() + "\n";
-            output += "DisableSound:" + disablesound.ToString() + "\n";            
+            output += "DisableSound:" + disablesound.ToString() + "\n";
             output += "DisableMusic:" + disablemusic.ToString() + "\n";
             output += "DisableLogos:" + disablelogos.ToString() + "\n";
             output += "DisableTrippleBuffering:" + disabletripplebuffering.ToString() + "\n";
@@ -333,12 +441,12 @@ namespace AVP_CustomLauncher
             output += "\"SCREENHEIGHT\" \"" + ResolutionY.ToString() + "\"\n";
             output += "\"GameScreenHeight\" \"" + ResolutionY.ToString() + "\"\n";
 
-            if(GameBitDepth)
+            if (GameBitDepth)
                 output += "\"GameBitDepth\" \"32\"\n";
             else
                 output += "\"GameBitDepth\" \"16\"\n";
 
-            if(FixTJunc)
+            if (FixTJunc)
                 output += "\"FixTJunc\" \"1\"\n";
             else
                 output += "\"FixTJunc\" \"0\"\n";
@@ -346,74 +454,6 @@ namespace AVP_CustomLauncher
             output += text;
             File.WriteAllText(autoexecfile, output);
         }
-
-        private void B_ManualEdit_TextChanged(object sender, EventArgs e)
-        {
-            text = B_ManualEdit.Text;
-        }
-
-        private void B_SaveAndClose_Click(object sender, EventArgs e)
-        {
-            savecustomconfig();
-            savefile();
-            Close();
-        }
-
-        private void B_Cancel_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
-        private void C_DisableSound_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_DisableSound.Checked)
-                disablesound = true;
-            else
-                disablesound = false;
-        }
-
-        private void C_DisableMusic_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_DisableMusic.Checked)
-                disablemusic = true;
-            else
-                disablemusic = false;
-        }
-
-        private void C_DisableLogos_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_DisableLogos.Checked)
-                disablelogos = true;
-            else
-                disablelogos = false;
-        }
-
-        private void C_DisableTripleBuffering_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_DisableTripleBuffering.Checked)
-                disabletripplebuffering = true;
-            else
-                disabletripplebuffering = false;
-        }
-
-        private void C_DisableJoystick_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_DisableJoystick.Checked)
-                disablejoystick = true;
-            else
-                disablejoystick = false;
-        }
-
-        private void C_DisableHardwareCursor_CheckedChanged(object sender, EventArgs e)
-        {
-            if (C_DisableHardwareCursor.Checked)
-                disablehardwarecursor = true;
-            else
-                disablehardwarecursor = false;
-        }
-
-        private void T_CommandLine_TextChanged(object sender, EventArgs e)
-        {
-        }
+        #endregion
     }
 }

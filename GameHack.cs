@@ -39,7 +39,8 @@ namespace AVP_CustomLauncher
         int[] offsetFovY = new int[] { 0x4, 0xC8 };
 
         int bgScalingAddress = 0x001F70C4;
-        int[] bgScalingOffsets = new int[] { 0x2BC, 0x1c4 };
+        int[] bgScalingOffsetsX = new int[] { 0x2BC, 0x1c0 };
+        int[] bgScalingOffsetsY = new int[] { 0x2BC, 0x1c4 };
 
         public void DoWork()
         {
@@ -86,7 +87,7 @@ namespace AVP_CustomLauncher
                     {
                         ReadFovX = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + fovAddress, offsetFovX);
                         ReadFovY = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + fovAddress, offsetFovY);
-                        readBgValue = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsets);
+                        readBgValue = Trainer.ReadPointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsetsY);
 
 
 
@@ -96,7 +97,10 @@ namespace AVP_CustomLauncher
                             Trainer.WritePointerFloat(myProcess, cshellBaseAdress + fovAddress, offsetFovY, fovY);
 
                         if (readBgValue != bgCorrectedValue && readBgValue != 0x0000000)
-                            Trainer.WritePointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsets, bgCorrectedValue);
+                        {
+                            Trainer.WritePointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsetsX, 1.570796f);
+                            Trainer.WritePointerFloat(myProcess, cshellBaseAdress + bgScalingAddress, bgScalingOffsetsY, bgCorrectedValue);
+                        }
 
                         if (!dllInjected && LithTechBaseAdress != 0x0 && cshellBaseAdress != 0x0 && d3dren != 0x0)
                         {
