@@ -282,7 +282,7 @@ namespace AVP_CustomLauncher
 
         private void mainform_LocationChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Normal)
+            if (this.WindowState == FormWindowState.Normal && this.DesktopLocation.X > 0 && this.DesktopLocation.Y > 0 && this.DesktopLocation.X < 14000)
             {
                 _posX = this.DesktopLocation.X;
                 _posY = this.DesktopLocation.Y;
@@ -291,6 +291,7 @@ namespace AVP_CustomLauncher
 
         private void B_DisplaySettings_Click(object sender, EventArgs e)
         {
+            _GraphicsSettings.StartPosition = FormStartPosition.Manual;
             _GraphicsSettings.SetDesktopLocation(this.DesktopLocation.X + 10, this.DesktopLocation.Y + 10);
             _GraphicsSettings.ShowDialog();
         }
@@ -333,5 +334,26 @@ namespace AVP_CustomLauncher
             return false;
         }
         #endregion
+
+        private void projectPageLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://github.com/SuiMachine/AVP2PH-Custom-Launcher");
+        }
+
+        private void donatePage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://www.gamingforgood.net/s/suicidemachine/widget");
+        }
+
+        private void pcgwLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://pcgamingwiki.com/w/index.php?title=Aliens_versus_Predator_2");
+
+        }
+
+        private void WSGFLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://www.wsgf.org/dr/aliens-versus-predator-2-gold-edition");
+        }
     }
 }

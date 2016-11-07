@@ -34,8 +34,15 @@
             this.B_DisplaySettings = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.B_StartGame = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.WSGFLink = new System.Windows.Forms.LinkLabel();
+            this.projectPageLink = new System.Windows.Forms.LinkLabel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pcgwLink = new System.Windows.Forms.LinkLabel();
+            this.donatePage = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -106,11 +113,82 @@
             this.B_StartGame.UseVisualStyleBackColor = true;
             this.B_StartGame.Click += new System.EventHandler(this.B_StartGame_Click);
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.WSGFLink);
+            this.panel2.Controls.Add(this.projectPageLink);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.pcgwLink);
+            this.panel2.Controls.Add(this.donatePage);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 350);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(356, 55);
+            this.panel2.TabIndex = 6;
+            // 
+            // WSGFLink
+            // 
+            this.WSGFLink.AutoSize = true;
+            this.WSGFLink.Location = new System.Drawing.Point(2, 35);
+            this.WSGFLink.Name = "WSGFLink";
+            this.WSGFLink.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.WSGFLink.Size = new System.Drawing.Size(138, 16);
+            this.WSGFLink.TabIndex = 4;
+            this.WSGFLink.TabStop = true;
+            this.WSGFLink.Text = "Wide-screen Gaming Forum";
+            this.WSGFLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.WSGFLink_LinkClicked);
+            // 
+            // projectPageLink
+            // 
+            this.projectPageLink.AutoSize = true;
+            this.projectPageLink.Location = new System.Drawing.Point(2, 3);
+            this.projectPageLink.Name = "projectPageLink";
+            this.projectPageLink.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.projectPageLink.Size = new System.Drawing.Size(68, 16);
+            this.projectPageLink.TabIndex = 1;
+            this.projectPageLink.TabStop = true;
+            this.projectPageLink.Text = "Project Page";
+            this.projectPageLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.projectPageLink_LinkClicked);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(69, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(12, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "/";
+            // 
+            // pcgwLink
+            // 
+            this.pcgwLink.AutoSize = true;
+            this.pcgwLink.Location = new System.Drawing.Point(2, 19);
+            this.pcgwLink.Name = "pcgwLink";
+            this.pcgwLink.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.pcgwLink.Size = new System.Drawing.Size(84, 16);
+            this.pcgwLink.TabIndex = 0;
+            this.pcgwLink.TabStop = true;
+            this.pcgwLink.Text = "PC Gaming Wiki";
+            this.pcgwLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.pcgwLink_LinkClicked);
+            // 
+            // donatePage
+            // 
+            this.donatePage.AutoSize = true;
+            this.donatePage.Location = new System.Drawing.Point(79, 3);
+            this.donatePage.Name = "donatePage";
+            this.donatePage.Padding = new System.Windows.Forms.Padding(0, 0, 0, 3);
+            this.donatePage.Size = new System.Drawing.Size(104, 16);
+            this.donatePage.TabIndex = 2;
+            this.donatePage.TabStop = true;
+            this.donatePage.Text = "Donate to developer";
+            this.donatePage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.donatePage_LinkClicked);
+            // 
             // mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 351);
+            this.ClientSize = new System.Drawing.Size(356, 405);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -125,6 +203,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -137,7 +217,12 @@
         private System.Windows.Forms.Button B_DisplaySettings;
         private System.Windows.Forms.Button B_StartGame;
         private System.Windows.Forms.Button B_Exit;
-
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.LinkLabel WSGFLink;
+        private System.Windows.Forms.LinkLabel projectPageLink;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.LinkLabel pcgwLink;
+        private System.Windows.Forms.LinkLabel donatePage;
     }
 }
 
