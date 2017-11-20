@@ -21,9 +21,17 @@ namespace AVP_CustomLauncher
         GameHack _gamehack = new GameHack();
         int _posX = 0;
         int _posY = 0;
+        private bool skipLauncher = false;
+        string originalParams = "";
 
-        public mainform()
+        public mainform(string[] originalParams)
         {
+            if(originalParams.Contains("-skiplauncher", StringComparer.InvariantCultureIgnoreCase))
+            {
+                originalParams = originalParams.Where(x => x.ToLower() != "-skiplauncher").ToArray();
+                skipLauncher = true;
+            }
+            this.originalParams = string.Join(" ", originalParams);
             LogHandler.WriteLine("LogFile created.");
             if (File.Exists("autoexecextended.cfg"))
             {
@@ -133,48 +141,59 @@ namespace AVP_CustomLauncher
             }
 
             _GraphicsSettings = new GameSettings(this);
+
+            if(skipLauncher)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                startGame();
+            }
         }
 
         private void B_StartGame_Click(object sender, EventArgs e)
+        {
+            startGame();
+        }
+
+        private void startGame()
         {
             StreamReader SR = new StreamReader("avp2cmds.txt");
             string cmdlineparamters = "";
             cmdlineparamters = SR.ReadToEnd();
             cmdlineparamters = stripResolutionParameters(cmdlineparamters);
 
-            cmdlineparamters += " ++RenderDll d3d.ren ++CardDesc display";
+            cmdlineparamters += " ++RenderDll d3d.ren ++CardDesc display " + originalParams + " " + _GraphicsSettings.T_CommandLine;
 
-            if (_GraphicsSettings.windowed)
+            if(_GraphicsSettings.windowed)
                 cmdlineparamters = cmdlineparamters + " +windowed 1";
             else
                 cmdlineparamters = cmdlineparamters + " +windowed 0";
 
-            if (_GraphicsSettings.disablesound)
+            if(_GraphicsSettings.disablesound)
                 cmdlineparamters = cmdlineparamters + " +DisableSound 1";
             else
                 cmdlineparamters = cmdlineparamters + " +DisableSound 0";
 
-            if (_GraphicsSettings.disablemusic)
+            if(_GraphicsSettings.disablemusic)
                 cmdlineparamters = cmdlineparamters + " +DisableMusic 1";
             else
                 cmdlineparamters = cmdlineparamters + " +DisableMusic 0";
 
-            if (_GraphicsSettings.disablelogos)
+            if(_GraphicsSettings.disablelogos)
                 cmdlineparamters = cmdlineparamters + " +DisableMovies 1";
             else
                 cmdlineparamters = cmdlineparamters + " +DisableMovies 0";
 
-            if (_GraphicsSettings.disablejoystick)
+            if(_GraphicsSettings.disablejoystick)
                 cmdlineparamters = cmdlineparamters + " +DisableJoystick 1";
             else
                 cmdlineparamters = cmdlineparamters + " +DisableJoystick 0";
 
-            if (_GraphicsSettings.disabletripplebuffering)
+            if(_GraphicsSettings.disabletripplebuffering)
                 cmdlineparamters = cmdlineparamters + " +EnableTripBuf 0";
             else
                 cmdlineparamters = cmdlineparamters + " +EnableTripBuf 1";
 
-            if (_GraphicsSettings.disablehardwarecursor)
+            if(_GraphicsSettings.disablehardwarecursor)
                 cmdlineparamters = cmdlineparamters + " +DisableHardwareCursor 1";
             else
                 cmdlineparamters = cmdlineparamters + " +DisableHardwareCursor 0";
@@ -182,7 +201,7 @@ namespace AVP_CustomLauncher
             cmdlineparamters = cmdlineparamters + " " + _GraphicsSettings.T_CommandLine.Text;
 
             Thread GameHackThread = new Thread(_gamehack.DoWork);
-            if (_GraphicsSettings.aspectratiohack)
+            if(_GraphicsSettings.aspectratiohack)
             {
                 _gamehack.SendValues(_GraphicsSettings.fov, _GraphicsSettings.ResolutionX, _GraphicsSettings.ResolutionY);
                 GameHackThread.Start();
@@ -201,7 +220,7 @@ namespace AVP_CustomLauncher
                 _gamehack.RequestStop();
                 this.Close();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 LogHandler.WriteLine("Exception in mainform (gameprocess):" + ex.ToString());
                 return;
