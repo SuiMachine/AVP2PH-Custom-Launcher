@@ -51,7 +51,7 @@ namespace AVP_CustomLauncher
         {
             fovY = HorizontalFOVToVerticalRadians(desiredfov);
             fovX = VerticalRadiansToHorizontalFor4By3Monitor(fovY);
-            bgCorrectedValue = correntMenuBGWithAspect(1.308997035f);
+            bgCorrectedValue = CorrentMenuBGWithAspect(1.308997035f);
             int variableBaseAddress = GetVariableAddressFromDll();
 
             LogHandler.WriteLine("Launcher directory is: " +path);
@@ -172,23 +172,6 @@ namespace AVP_CustomLauncher
                             Trainer.WriteInteger(myProcess, hookedDllAddress + variableBaseAddress, ResolutionX);
                             Trainer.WriteInteger(myProcess, hookedDllAddress + variableBaseAddress + 4, ResolutionY);
                             LogHandler.WriteLine($"Written to dllHook: {ResolutionX}x{ResolutionY} at address {(hookedDllAddress + 0x19008).ToString("X4")}");
-
-#if DEBUG
-                            {
-                                LogHandler.WriteLine("DLL Injected at: 0x" + hookedDllAddress.ToString("X4"));
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x19008, ResolutionX);
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x1900C, ResolutionY);
-                                LogHandler.WriteLine("Written to dllHook: " + ResolutionX + "x" + ResolutionY + " at address " + (hookedDllAddress + 0x19008).ToString("X4"));
-                            }
-                            #else
-                            {
-                                //And HOPE NOTHING MOVED
-                                LogHandler.WriteLine("DLL injected at: 0x" + hookedDllAddress.ToString("X4"));
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x4008, ResolutionX);
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x400C, ResolutionY);
-                                LogHandler.WriteLine("Written to dllHook: " + ResolutionX + "x" + ResolutionY + " at address " + (hookedDllAddress + 0x4008).ToString("X4"));
-                            }
-                            #endif
                         }
                     }
                     System.Threading.Thread.Sleep(threadDelay);
@@ -200,7 +183,7 @@ namespace AVP_CustomLauncher
             }
         }
 
-        private float correntMenuBGWithAspect(float bgVal)
+        private float CorrentMenuBGWithAspect(float bgVal)
         {
             double verticalVal = 2 * Math.Atan(Math.Tan(bgVal / 2) * (ResolutionY * 1.0 / ResolutionX * 1.0));
             double dHorizontalRadians = 2 * Math.Atan(Math.Tan(verticalVal / 2) * (1024 * 1.0 / 768 * 1.0));
