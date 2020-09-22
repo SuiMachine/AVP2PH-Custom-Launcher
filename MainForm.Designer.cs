@@ -197,7 +197,7 @@
             this.Name = "mainform";
             this.ShowIcon = false;
             this.Text = "Aliens vs. Predator 2: Primal Hunt  - Custom Launcher";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.mainform_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Mainform_FormClosing);
             this.Load += new System.EventHandler(this.mainform_Load);
             this.LocationChanged += new System.EventHandler(this.mainform_LocationChanged);
             this.tableLayoutPanel1.ResumeLayout(false);

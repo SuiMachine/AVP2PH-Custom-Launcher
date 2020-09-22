@@ -13,3 +13,7 @@ Release/*.pdb
 Release/*.vshost.exe
 Release/*.vshost.exe.manifest
 .vs/
+
+*.7z
+*.zip
+*.rar
