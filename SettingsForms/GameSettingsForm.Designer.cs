@@ -422,6 +422,7 @@
 			this.C_LithFix_ENABLED.TabIndex = 0;
 			this.C_LithFix_ENABLED.Text = "Enable (add \"-rez lithfix\")";
 			this.C_LithFix_ENABLED.UseVisualStyleBackColor = true;
+			this.C_LithFix_ENABLED.CheckedChanged += new System.EventHandler(this.C_LithFix_ENABLED_CheckedChanged);
 			// 
 			// panel3
 			// 

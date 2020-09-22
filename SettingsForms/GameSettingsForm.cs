@@ -167,6 +167,11 @@ namespace AVP_CustomLauncher
         {
             lithTechConfig.lf_borderless_window = C_LithFix_Borderless.Checked ? 1u : 0u;
         }
-        #endregion
-    }
+		#endregion
+
+		private void C_LithFix_ENABLED_CheckedChanged(object sender, EventArgs e)
+		{
+            ToggleLithFixSpecificEnable();
+		}
+	}
 }
