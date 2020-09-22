@@ -123,6 +123,8 @@ namespace AVP_CustomLauncher
 
             customConfig = Config.CustomConfig.Load();
             lithTechConfig = Config.LithTechConfig.Load();
+            if (customConfig.LithFixEnabled)
+                customConfig.LithFixEnabled = customConfig.CheckLithFix();
 
             if (!File.Exists("avp2cmds.txt"))
             {
@@ -286,24 +288,6 @@ namespace AVP_CustomLauncher
         }
         #endregion
 
-        #region ParseFunctions
-        private uint parsePosition(string line)
-        {
-            uint outVal = 0;
-            string valText = line.Split(':')[1];
-            if (valText != String.Empty)
-            {
-                if (uint.TryParse(valText, out outVal))
-                {
-                    return outVal;
-                }
-                else
-                    return 0;
-            }
-            else
-                return 0;
-        }
-
         private bool checkIfPosIsCorrect(uint PosX, uint PosY)
         {
             Screen[] screens = Screen.AllScreens;
@@ -316,7 +300,6 @@ namespace AVP_CustomLauncher
             }
             return false;
         }
-        #endregion
 
         private void projectPageLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
