@@ -15,7 +15,7 @@ Requirements
  * Aliens vs. Predator 2: Primal Hunt
  * Windows Vista / 7 / 8 / 10
  * [Microsoft .NET Framework 4.5](https://www.microsoft.com/en-US/download/details.aspx?id=30653)
- * [Visual C++ Redistributable for Visual Studio 2015](https://www.microsoft.com/en-US/download/details.aspx?id=48145) 32-bit
+ * [Visual C++ Redistributable for Visual Studio 2017](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads) 32-bit
  * Administrator rights on the system (due to writting to memory of other program / injecting DLL libraries etc.)
   
 Installation

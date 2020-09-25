@@ -7,11 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace AVP_CustomLauncher
 {
     class GameHack
     {
+        [DllImport("widescreenfix.dll")]
+        public static extern int GetVariableAddressFromDll();
+
+        bool LithFixEnabled = false;
         int LithTechBaseAdress = 0x00400000;
         int cshellBaseAdress = 0x0000000;           //Is changed later, when the app starts running.
         int d3dren = 0x0;
@@ -46,7 +51,8 @@ namespace AVP_CustomLauncher
         {
             fovY = HorizontalFOVToVerticalRadians(desiredfov);
             fovX = VerticalRadiansToHorizontalFor4By3Monitor(fovY);
-            bgCorrectedValue = correntMenuBGWithAspect(1.308997035f);
+            bgCorrectedValue = CorrentMenuBGWithAspect(1.308997035f);
+            int variableBaseAddress = GetVariableAddressFromDll();
 
             LogHandler.WriteLine("Launcher directory is: " +path);
             LogHandler.WriteLine("Display FOV calculated to: " + fovX + " horizontal, " + fovY + " vertical");
@@ -69,14 +75,13 @@ namespace AVP_CustomLauncher
                             ProcessModuleCollection modules = foundProcesses[0].Modules;
                             foreach (ProcessModule i in modules)
                             {
-                                if (i.ModuleName == "cshell.dll")
-                                {
+                                var moduleName = i.ModuleName.ToLower();
+                                if (!LithFixEnabled && moduleName == "cshell.dll")
                                     cshellBaseAdress = i.BaseAddress.ToInt32();
-                                }
-                                else if (i.ModuleName == "d3d.ren")
-                                {
+                                else if (LithFixEnabled && moduleName == "cshellreal.dll")
+                                    cshellBaseAdress = i.BaseAddress.ToInt32();
+                                else if (moduleName == "d3d.ren")
                                     d3dren = i.BaseAddress.ToInt32();
-                                }
                             }
                         }
 
@@ -161,23 +166,12 @@ namespace AVP_CustomLauncher
                                 }
                             }
                             hookedDllAddress = dllBaseAdressIWant.BaseAddress.ToInt32();
-                            
-                            #if DEBUG
-                            {
-                                LogHandler.WriteLine("DLL Injected at: 0x" + hookedDllAddress.ToString("X4"));
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x19008, ResolutionX);
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x1900C, ResolutionY);
-                                LogHandler.WriteLine("Written to dllHook: " + ResolutionX + "x" + ResolutionY + " at address " + (hookedDllAddress + 0x19008).ToString("X4"));
-                            }
-                            #else
-                            {
-                                //And HOPE NOTHING MOVED
-                                LogHandler.WriteLine("DLL injected at: 0x" + hookedDllAddress.ToString("X4"));
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x4008, ResolutionX);
-                                Trainer.WriteInteger(myProcess, hookedDllAddress + 0x400C, ResolutionY);
-                                LogHandler.WriteLine("Written to dllHook: " + ResolutionX + "x" + ResolutionY + " at address " + (hookedDllAddress + 0x4008).ToString("X4"));
-                            }
-                            #endif
+
+                            LogHandler.WriteLine($"DLL Injected at: 0x{hookedDllAddress.ToString("X4")}");
+                            LogHandler.WriteLine($"Writting to memory at: 0x{(hookedDllAddress + variableBaseAddress).ToString("X4")} and 0x{(hookedDllAddress + variableBaseAddress + 4).ToString("X4")}");
+                            Trainer.WriteInteger(myProcess, hookedDllAddress + variableBaseAddress, ResolutionX);
+                            Trainer.WriteInteger(myProcess, hookedDllAddress + variableBaseAddress + 4, ResolutionY);
+                            LogHandler.WriteLine($"Written to dllHook: {ResolutionX}x{ResolutionY} at address {(hookedDllAddress + 0x19008).ToString("X4")}");
                         }
                     }
                     System.Threading.Thread.Sleep(threadDelay);
@@ -189,18 +183,19 @@ namespace AVP_CustomLauncher
             }
         }
 
-        private float correntMenuBGWithAspect(float bgVal)
+        private float CorrentMenuBGWithAspect(float bgVal)
         {
             double verticalVal = 2 * Math.Atan(Math.Tan(bgVal / 2) * (ResolutionY * 1.0 / ResolutionX * 1.0));
             double dHorizontalRadians = 2 * Math.Atan(Math.Tan(verticalVal / 2) * (1024 * 1.0 / 768 * 1.0));
             return Convert.ToSingle(dHorizontalRadians);
         }
 
-        public void SendValues(float value, int ResX, int ResY)
+        public void SendValues(float value, int ResX, int ResY, bool lithFixEnabled)
         {
             desiredfov = value;
             ResolutionX = ResX;
             ResolutionY = ResY;
+            LithFixEnabled = lithFixEnabled;
             LogHandler.WriteLine("GameHack thread received values: " + ResolutionX + "x" + ResolutionY + " @ " + desiredfov);
         }
         
