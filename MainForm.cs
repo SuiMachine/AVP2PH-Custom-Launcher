@@ -312,11 +312,6 @@ namespace AVP_CustomLauncher
 			Process.Start("https://github.com/SuiMachine/AVP2PH-Custom-Launcher");
 		}
 
-		private void DonatePage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			Process.Start("https://www.gamingforgood.net/s/suicidemachine/widget");
-		}
-
 		private void PcgwLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			Process.Start("http://pcgamingwiki.com/w/index.php?title=Aliens_versus_Predator_2");
