@@ -411,6 +411,7 @@
 			this.C_LithFix_Borderless.TabIndex = 1;
 			this.C_LithFix_Borderless.Text = "Enable borderless window";
 			this.C_LithFix_Borderless.UseVisualStyleBackColor = true;
+			this.C_LithFix_Borderless.CheckedChanged += new System.EventHandler(this.C_LithFix_Borderless_CheckedChanged);
 			// 
 			// C_LithFix_ENABLED
 			// 

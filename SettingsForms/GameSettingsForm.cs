@@ -162,16 +162,17 @@ namespace AVP_CustomLauncher
             this.DialogResult = DialogResult.Cancel;
             Close();
         }
-
-        private void CB_LithFix_Borderless_CheckedChanged(object sender, EventArgs e)
-        {
-            lithTechConfig.lf_borderless_window = C_LithFix_Borderless.Checked ? 1u : 0u;
-        }
 		#endregion
 
 		private void C_LithFix_ENABLED_CheckedChanged(object sender, EventArgs e)
 		{
             ToggleLithFixSpecificEnable();
+		}
+
+		private void C_LithFix_Borderless_CheckedChanged(object sender, EventArgs e)
+		{
+			lithTechConfig.lf_borderless_window = C_LithFix_Borderless.Checked ? 1u : 0u;
+
 		}
 	}
 }
